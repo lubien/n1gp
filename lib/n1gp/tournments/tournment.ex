@@ -6,6 +6,7 @@ defmodule N1gp.Tournments.Tournment do
     field :key, :string
     field :name, :string
     field :type, :string
+    has_many :participants, N1gp.Tournments.Participant
 
     timestamps()
   end
@@ -16,5 +17,6 @@ defmodule N1gp.Tournments.Tournment do
     |> cast(attrs, [:key, :name, :type])
     |> validate_required([:key, :name, :type])
     |> unique_constraint(:key)
+    # |> cast_assoc(:participants, with: &N1gp.Tournments.Participant.changeset/2)
   end
 end

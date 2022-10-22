@@ -1,0 +1,51 @@
+<h1>Show Participant</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.participant_show_path(@socket, :show, @participant)}>
+    <.live_component
+      module={N1gpWeb.ParticipantLive.FormComponent}
+      id={@participant.id}
+      title={@page_title}
+      action={@live_action}
+      participant={@participant}
+      return_to={Routes.participant_show_path(@socket, :show, @participant)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Entrant no:</strong>
+    <%= @participant.entrant_no %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @participant.name %>
+  </li>
+
+  <li>
+    <strong>Discord name:</strong>
+    <%= @participant.discord_name %>
+  </li>
+
+  <li>
+    <strong>Version:</strong>
+    <%= @participant.version %>
+  </li>
+
+  <li>
+    <strong>Navicust image:</strong>
+    <%= @participant.navicust_image %>
+  </li>
+
+  <li>
+    <strong>Navicust:</strong>
+    <%= @participant.navicust %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.participant_show_path(@socket, :edit, @participant), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.participant_index_path(@socket, :index) %></span>

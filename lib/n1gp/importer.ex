@@ -1,4 +1,6 @@
 defmodule N1gp.Importer do
+  alias N1gp.Importer.Spreadsheet
+
   @manual_mappings %{
     "DR.TBB2#3787" => "TBB2",
     "weenie#1984" => "weenie"
@@ -56,16 +58,16 @@ defmodule N1gp.Importer do
     type = Keyword.fetch!(opts, :type)
     # rounds = Keyword.fetch!(opts, :rounds)
 
-    # participants = N1gp.Spreadsheet.get_participants("nv2022c12bm3")
+    participants = Spreadsheet.get_participants(key)
 
     # rounds = Enum.map(rounds, &get_round(&1, participants))
 
     %{
       key: key,
       name: name,
-      type: type
+      type: type,
       # rounds: rounds,
-      # participants: participants
+      participants: participants
     }
   end
 

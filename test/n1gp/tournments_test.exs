@@ -60,4 +60,68 @@ defmodule N1gp.TournmentsTest do
       assert %Ecto.Changeset{} = Tournments.change_tournment(tournment)
     end
   end
+
+  describe "participants" do
+    alias N1gp.Tournments.Participant
+
+    import N1gp.TournmentsFixtures
+
+    @invalid_attrs %{discord_name: nil, entrant_no: nil, name: nil, navicust: nil, navicust_image: nil, version: nil}
+
+    test "list_participants/0 returns all participants" do
+      participant = participant_fixture()
+      assert Tournments.list_participants() == [participant]
+    end
+
+    test "get_participant!/1 returns the participant with given id" do
+      participant = participant_fixture()
+      assert Tournments.get_participant!(participant.id) == participant
+    end
+
+    test "create_participant/1 with valid data creates a participant" do
+      valid_attrs = %{discord_name: "some discord_name", entrant_no: 42, name: "some name", navicust: [], navicust_image: "some navicust_image", version: "some version"}
+
+      assert {:ok, %Participant{} = participant} = Tournments.create_participant(valid_attrs)
+      assert participant.discord_name == "some discord_name"
+      assert participant.entrant_no == 42
+      assert participant.name == "some name"
+      assert participant.navicust == []
+      assert participant.navicust_image == "some navicust_image"
+      assert participant.version == "some version"
+    end
+
+    test "create_participant/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tournments.create_participant(@invalid_attrs)
+    end
+
+    test "update_participant/2 with valid data updates the participant" do
+      participant = participant_fixture()
+      update_attrs = %{discord_name: "some updated discord_name", entrant_no: 43, name: "some updated name", navicust: [], navicust_image: "some updated navicust_image", version: "some updated version"}
+
+      assert {:ok, %Participant{} = participant} = Tournments.update_participant(participant, update_attrs)
+      assert participant.discord_name == "some updated discord_name"
+      assert participant.entrant_no == 43
+      assert participant.name == "some updated name"
+      assert participant.navicust == []
+      assert participant.navicust_image == "some updated navicust_image"
+      assert participant.version == "some updated version"
+    end
+
+    test "update_participant/2 with invalid data returns error changeset" do
+      participant = participant_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tournments.update_participant(participant, @invalid_attrs)
+      assert participant == Tournments.get_participant!(participant.id)
+    end
+
+    test "delete_participant/1 deletes the participant" do
+      participant = participant_fixture()
+      assert {:ok, %Participant{}} = Tournments.delete_participant(participant)
+      assert_raise Ecto.NoResultsError, fn -> Tournments.get_participant!(participant.id) end
+    end
+
+    test "change_participant/1 returns a participant changeset" do
+      participant = participant_fixture()
+      assert %Ecto.Changeset{} = Tournments.change_participant(participant)
+    end
+  end
 end

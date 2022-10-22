@@ -1,0 +1,40 @@
+<div>
+  <h2><%= @title %></h2>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="participant-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <%= label f, :entrant_no %>
+    <%= number_input f, :entrant_no %>
+    <%= error_tag f, :entrant_no %>
+  
+    <%= label f, :name %>
+    <%= text_input f, :name %>
+    <%= error_tag f, :name %>
+  
+    <%= label f, :discord_name %>
+    <%= text_input f, :discord_name %>
+    <%= error_tag f, :discord_name %>
+  
+    <%= label f, :version %>
+    <%= text_input f, :version %>
+    <%= error_tag f, :version %>
+  
+    <%= label f, :navicust_image %>
+    <%= text_input f, :navicust_image %>
+    <%= error_tag f, :navicust_image %>
+  
+    <%= label f, :navicust %>
+    <%= multiple_select f, :navicust, ["Option 1": "option1", "Option 2": "option2"] %>
+    <%= error_tag f, :navicust %>
+  
+    <div>
+      <%= submit "Save", phx_disable_with: "Saving..." %>
+    </div>
+  </.form>
+</div>

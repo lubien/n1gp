@@ -7,13 +7,49 @@ defmodule N1gp.Tournments do
   alias N1gp.Repo
 
   alias N1gp.Tournments.Tournment
+  alias N1gp.Tournments.Participant
 
   def import_tournment(attrs) do
     Repo.transaction(fn ->
-      attrs
-      |> N1gp.Importer.import_tournment()
-      |> create_tournment(conflict_target: :key, on_conflict: {:replace, [:name, :type]})
-      |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+      tournment_attrs =
+        attrs
+        |> N1gp.Importer.import_tournment()
+
+      {:ok, tournment} =
+        tournment_attrs
+        |> create_tournment(conflict_target: :key, on_conflict: {:replace, [:name, :type]})
+
+      timestamp =
+        NaiveDateTime.utc_now()
+        |> NaiveDateTime.truncate(:second)
+
+      placeholders = %{timestamp: timestamp}
+
+      participant_changesets =
+        tournment_attrs.participants
+        |> Enum.map(
+          &Map.merge(&1, %{
+            inserted_at: {:placeholder, :timestamp},
+            updated_at: {:placeholder, :timestamp},
+            tournment_id: tournment.id
+          }
+        ))
+
+      fields = [
+        :discord_name,
+        :name,
+        :navicust,
+        :navicust_image,
+        :version,
+      ]
+
+      {_count, participants} =
+        Repo.insert_all(Participant, participant_changesets,
+        returning: true,
+        placeholders: placeholders,
+        conflict_target: [:tournment_id, :entrant_no],
+        on_conflict: {:replace, fields}
+      )
     end)
   end
 
@@ -109,5 +145,99 @@ defmodule N1gp.Tournments do
   """
   def change_tournment(%Tournment{} = tournment, attrs \\ %{}) do
     Tournment.changeset(tournment, attrs)
+  end
+
+  @doc """
+  Returns the list of participants.
+
+  ## Examples
+
+      iex> list_participants()
+      [%Participant{}, ...]
+
+  """
+  def list_participants do
+    Repo.all(Participant)
+  end
+
+  @doc """
+  Gets a single participant.
+
+  Raises `Ecto.NoResultsError` if the Participant does not exist.
+
+  ## Examples
+
+      iex> get_participant!(123)
+      %Participant{}
+
+      iex> get_participant!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_participant!(id), do: Repo.get!(Participant, id)
+
+  @doc """
+  Creates a participant.
+
+  ## Examples
+
+      iex> create_participant(%{field: value})
+      {:ok, %Participant{}}
+
+      iex> create_participant(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_participant(attrs \\ %{}) do
+    %Participant{}
+    |> Participant.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a participant.
+
+  ## Examples
+
+      iex> update_participant(participant, %{field: new_value})
+      {:ok, %Participant{}}
+
+      iex> update_participant(participant, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_participant(%Participant{} = participant, attrs) do
+    participant
+    |> Participant.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a participant.
+
+  ## Examples
+
+      iex> delete_participant(participant)
+      {:ok, %Participant{}}
+
+      iex> delete_participant(participant)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_participant(%Participant{} = participant) do
+    Repo.delete(participant)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking participant changes.
+
+  ## Examples
+
+      iex> change_participant(participant)
+      %Ecto.Changeset{data: %Participant{}}
+
+  """
+  def change_participant(%Participant{} = participant, attrs \\ %{}) do
+    Participant.changeset(participant, attrs)
   end
 end

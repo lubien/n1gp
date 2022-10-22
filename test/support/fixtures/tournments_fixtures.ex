@@ -24,4 +24,23 @@ defmodule N1gp.TournmentsFixtures do
 
     tournment
   end
+
+  @doc """
+  Generate a participant.
+  """
+  def participant_fixture(attrs \\ %{}) do
+    {:ok, participant} =
+      attrs
+      |> Enum.into(%{
+        discord_name: "some discord_name",
+        entrant_no: 42,
+        name: "some name",
+        navicust: [],
+        navicust_image: "some navicust_image",
+        version: "some version"
+      })
+      |> N1gp.Tournments.create_participant()
+
+    participant
+  end
 end

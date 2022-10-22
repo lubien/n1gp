@@ -1,0 +1,49 @@
+<h1>Listing Participants</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.participant_index_path(@socket, :index)}>
+    <.live_component
+      module={N1gpWeb.ParticipantLive.FormComponent}
+      id={@participant.id || :new}
+      title={@page_title}
+      action={@live_action}
+      participant={@participant}
+      return_to={Routes.participant_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Entrant no</th>
+      <th>Name</th>
+      <th>Discord name</th>
+      <th>Version</th>
+      <th>Navicust image</th>
+      <th>Navicust</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="participants">
+    <%= for participant <- @participants do %>
+      <tr id={"participant-#{participant.id}"}>
+        <td><%= participant.entrant_no %></td>
+        <td><%= participant.name %></td>
+        <td><%= participant.discord_name %></td>
+        <td><%= participant.version %></td>
+        <td><%= participant.navicust_image %></td>
+        <td><%= participant.navicust %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.participant_show_path(@socket, :show, participant) %></span>
+          <span><%= live_patch "Edit", to: Routes.participant_index_path(@socket, :edit, participant) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: participant.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Participant", to: Routes.participant_index_path(@socket, :new) %></span>
