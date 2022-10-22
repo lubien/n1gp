@@ -188,7 +188,7 @@
   },
   {
     "Name": "YoYo",
-    "Element": "Null (Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "32 MB",
     "ATK": "50",
     "Codes": "L M N *",
@@ -815,7 +815,7 @@
   },
   {
     "Name": "FireSwrd",
-    "Element": "Fire (Secondary: Sword)",
+    "Element": "Fire/Sword",
     "MB": "30 MB",
     "ATK": "140",
     "Codes": "F O Z",
@@ -826,7 +826,7 @@
   },
   {
     "Name": "AquaSwrd",
-    "Element": "Aqua (Secondary: Sword)",
+    "Element": "Aqua/Sword",
     "MB": "32 MB",
     "ATK": "160",
     "Codes": "A I Y",
@@ -837,7 +837,7 @@
   },
   {
     "Name": "ElecSwrd",
-    "Element": "Elec (Secondary: Sword)",
+    "Element": "Elec/Sword",
     "MB": "32 MB",
     "ATK": "120",
     "Codes": "E K N",
@@ -848,7 +848,7 @@
   },
   {
     "Name": "BambSwrd",
-    "Element": "Wood (Secondary: Sword)",
+    "Element": "Wood/Sword",
     "MB": "34 MB",
     "ATK": "150",
     "Codes": "H S W",
@@ -936,7 +936,7 @@
   },
   {
     "Name": "MchnSwrd",
-    "Element": "Null (Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "37 MB",
     "ATK": "200",
     "Codes": "H L Q",
@@ -947,7 +947,7 @@
   },
   {
     "Name": "ElemSwrd",
-    "Element": "Null (Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "43 MB",
     "ATK": "220",
     "Codes": "J M U",
@@ -958,7 +958,7 @@
   },
   {
     "Name": "AssnSwrd",
-    "Element": "Null (Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "50 MB",
     "ATK": "240",
     "Codes": "N R Y",
@@ -1101,7 +1101,7 @@
   },
   {
     "Name": "SumnBlk1",
-    "Element": "Null(Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "30 MB",
     "ATK": "160",
     "Codes": "E I P",
@@ -1112,7 +1112,7 @@
   },
   {
     "Name": "SumnBlk2",
-    "Element": "Null (Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "40 MB",
     "ATK": "200",
     "Codes": "H O V",
@@ -1123,7 +1123,7 @@
   },
   {
     "Name": "SumnBlk3",
-    "Element": "Null (Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "46 MB",
     "ATK": "260",
     "Codes": "W Y Z",
@@ -1519,7 +1519,7 @@
   },
   {
     "Name": "LilBolr1",
-    "Element": "Summon and Aqua",
+    "Element": "Summon/Aqua",
     "MB": "18 MB",
     "ATK": "100",
     "Codes": "F K L",
@@ -1530,7 +1530,7 @@
   },
   {
     "Name": "LilBolr2",
-    "Element": "Summon and Aqua",
+    "Element": "Summon/Aqua",
     "MB": "23 MB",
     "ATK": "140",
     "Codes": "E M V",
@@ -1541,7 +1541,7 @@
   },
   {
     "Name": "LilBolr3",
-    "Element": "Summon and Aqua",
+    "Element": "Summon/Aqua",
     "MB": "28 MB",
     "ATK": "180",
     "Codes": "G S Z",
@@ -2069,7 +2069,7 @@
   },
   {
     "Name": "AntiDmg",
-    "Element": "Null (Secondary: Sword)",
+    "Element": "Null/Sword",
     "MB": "30 MB",
     "ATK": "100",
     "Codes": "G R V *",
@@ -2300,7 +2300,7 @@
   },
   {
     "Name": "TmhkMan",
-    "Element": "Wood (Secondary: Sword)",
+    "Element": "Wood/Sword",
     "MB": "40 MB",
     "ATK": "140",
     "Codes": "T *",
@@ -2311,7 +2311,7 @@
   },
   {
     "Name": "TmhkManEX",
-    "Element": "Wood (Secondary: Sword)",
+    "Element": "Wood/Sword",
     "MB": "60 MB",
     "ATK": "160",
     "Codes": "T",
@@ -2322,7 +2322,7 @@
   },
   {
     "Name": "TmhkManSP",
-    "Element": "Wood (Secondary: Sword)",
+    "Element": "Wood/Sword",
     "MB": "80 MB",
     "ATK": "280",
     "Codes": "T",
