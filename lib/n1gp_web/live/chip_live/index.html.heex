@@ -1,0 +1,61 @@
+<h1>Listing Chips</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.chip_index_path(@socket, :index)}>
+    <.live_component
+      module={N1gpWeb.ChipLive.FormComponent}
+      id={@chip.id || :new}
+      title={@page_title}
+      action={@live_action}
+      chip={@chip}
+      return_to={Routes.chip_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Elements</th>
+      <th>Mb</th>
+      <th>Atk</th>
+      <th>Codes</th>
+      <th>Description</th>
+      <th>Image</th>
+      <th>More details</th>
+      <th>Aliases</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="chips">
+    <%= for chip <- @chips do %>
+      <tr id={"chip-#{chip.id}"}>
+        <td><%= chip.name %></td>
+        <td><%= chip.elements %></td>
+        <td><%= chip.mb %></td>
+        <td><%= chip.atk %></td>
+        <td><%= chip.codes %></td>
+        <td><%= chip.description %></td>
+        <td>
+          <%= if chip.image do %>
+            <img src={chip.image} />
+          <% else %>
+            --
+          <% end %>
+        </td>
+        <td><%= chip.more_details %></td>
+        <td><%= chip.aliases %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.chip_show_path(@socket, :show, chip) %></span>
+          <span><%= live_patch "Edit", to: Routes.chip_index_path(@socket, :edit, chip) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: chip.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Chip", to: Routes.chip_index_path(@socket, :new) %></span>

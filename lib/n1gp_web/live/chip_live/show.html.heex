@@ -1,0 +1,70 @@
+<h1>Show Chip</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.chip_show_path(@socket, :show, @chip)}>
+    <.live_component
+      module={N1gpWeb.ChipLive.FormComponent}
+      id={@chip.id}
+      title={@page_title}
+      action={@live_action}
+      chip={@chip}
+      return_to={Routes.chip_show_path(@socket, :show, @chip)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @chip.name %>
+  </li>
+
+  <li>
+    <strong>Elements:</strong>
+    <%= @chip.elements %>
+  </li>
+
+  <li>
+    <strong>Mb:</strong>
+    <%= @chip.mb %>
+  </li>
+
+  <li>
+    <strong>Atk:</strong>
+    <%= @chip.atk %>
+  </li>
+
+  <li>
+    <strong>Codes:</strong>
+    <%= @chip.codes %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @chip.description %>
+  </li>
+
+  <li>
+    <strong>Image:</strong>
+    <%= if @chip.image do %>
+      <img src={@chip.image} />
+    <% else %>
+      --
+    <% end %>
+  </li>
+
+  <li>
+    <strong>More details:</strong>
+    <%= @chip.more_details %>
+  </li>
+
+  <li>
+    <strong>Aliases:</strong>
+    <%= @chip.aliases %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.chip_show_path(@socket, :edit, @chip), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.chip_index_path(@socket, :index) %></span>

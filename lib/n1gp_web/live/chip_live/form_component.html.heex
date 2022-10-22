@@ -1,0 +1,52 @@
+<div>
+  <h2><%= @title %></h2>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="chip-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <%= label f, :name %>
+    <%= text_input f, :name %>
+    <%= error_tag f, :name %>
+  
+    <%= label f, :elements %>
+    <%= multiple_select f, :elements, ["Option 1": "option1", "Option 2": "option2"] %>
+    <%= error_tag f, :elements %>
+  
+    <%= label f, :mb %>
+    <%= number_input f, :mb %>
+    <%= error_tag f, :mb %>
+  
+    <%= label f, :atk %>
+    <%= number_input f, :atk %>
+    <%= error_tag f, :atk %>
+  
+    <%= label f, :codes %>
+    <%= multiple_select f, :codes, ["Option 1": "option1", "Option 2": "option2"] %>
+    <%= error_tag f, :codes %>
+  
+    <%= label f, :description %>
+    <%= text_input f, :description %>
+    <%= error_tag f, :description %>
+  
+    <%= label f, :image %>
+    <%= text_input f, :image %>
+    <%= error_tag f, :image %>
+  
+    <%= label f, :more_details %>
+    <%= multiple_select f, :more_details, ["Option 1": "option1", "Option 2": "option2"] %>
+    <%= error_tag f, :more_details %>
+  
+    <%= label f, :aliases %>
+    <%= multiple_select f, :aliases, ["Option 1": "option1", "Option 2": "option2"] %>
+    <%= error_tag f, :aliases %>
+  
+    <div>
+      <%= submit "Save", phx_disable_with: "Saving..." %>
+    </div>
+  </.form>
+</div>

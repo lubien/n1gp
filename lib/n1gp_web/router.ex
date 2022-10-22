@@ -18,6 +18,12 @@ defmodule N1gpWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    live "/chips", ChipLive.Index, :index
+    live "/chips/new", ChipLive.Index, :new
+    live "/chips/:id/edit", ChipLive.Index, :edit
+
+    live "/chips/:id", ChipLive.Show, :show
+    live "/chips/:id/show/edit", ChipLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
