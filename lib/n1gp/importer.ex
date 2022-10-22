@@ -105,7 +105,7 @@ defmodule N1gp.Importer do
       type: challonge_tournment["tournament_type"],
       started_at: parse_datetime_utc(challonge_tournment["started_at"]),
       completed_at: parse_datetime_utc(challonge_tournment["completed_at"]),
-      # participants: round_participants,
+      participants: round_participants,
       # TODO: winner
       # matches: matches
     }

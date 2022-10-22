@@ -27,4 +27,23 @@ defmodule N1gp.RoundsFixtures do
 
     round
   end
+
+  @doc """
+  Generate a unique round_participant challonge_id.
+  """
+  def unique_round_participant_challonge_id, do: System.unique_integer([:positive])
+
+  @doc """
+  Generate a round_participant.
+  """
+  def round_participant_fixture(attrs \\ %{}) do
+    {:ok, round_participant} =
+      attrs
+      |> Enum.into(%{
+        challonge_id: unique_round_participant_challonge_id()
+      })
+      |> N1gp.Rounds.create_round_participant()
+
+    round_participant
+  end
 end
