@@ -27,6 +27,7 @@ defmodule N1gp.Importer do
 
   def parse_chip_int(nil), do: nil
   def parse_chip_int("--"), do: nil
+  def parse_chip_int("????"), do: nil
   def parse_chip_int(mb) do
     case Integer.parse(mb) do
       {int, _rest} ->

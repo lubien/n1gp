@@ -173,7 +173,7 @@
     "Description": "Hits row 2 panels ahead with sunshine",
     "Image": "https://vignette3.wikia.nocookie.net/megaman/images/2/2a/BN6Chip016.png",
     "MoreDetails": "https://bit.ly/2VXrpEL",
-    "Alias": "GunDelSol2,GunDelSun2,TAIYOH 2,TAIYOH2,GunDelSol 2,GDS2"
+    "Alias": "GunDelSol2,GunDelSun2,TAIYOH 2,TAIYOH2,GunDelSol 2,GDS2,GunDelS2"
   },
   {
     "Name": "GunDelS3",
@@ -2087,7 +2087,7 @@
     "Description": "Counter sword attack with sonic booms",
     "Image": "https://vignette3.wikia.nocookie.net/megaman/images/0/08/BN6Chip190.png",
     "MoreDetails": "http://bit.ly/2YL101v",
-    "Alias": ""
+    "Alias": "AntiSwrd"
   },
   {
     "Name": "AntiRecov",
@@ -2098,7 +2098,7 @@
     "Description": "Counter enemy's recovery with damage",
     "Image": "https://vignette1.wikia.nocookie.net/megaman/images/8/8c/BN6Chip191.png",
     "MoreDetails": "http://bit.ly/33h7V1O",
-    "Alias": "AntiRecovery,AntiHeal,BadMedicine"
+    "Alias": "AntiRecovery,AntiHeal,BadMedicine,AntiRecv"
   },
   {
     "Name": "WhiCapsl",
@@ -3011,7 +3011,7 @@
     "Description": "Falzar Only. Gain Shield, AirShoes, FloatShoes, Custom8, BusterMax, & UnderShirt.",
     "Image": "https://vignette4.wikia.nocookie.net/megaman/images/f/f9/BN6FGChip004.png",
     "MoreDetails": "http://bit.ly/2GR76D4",
-    "Alias": "HubBatch,HubBat"
+    "Alias": "HubBatch,HubBat,Hubbatc"
   },
   {
     "Name": "BgDthThd",
