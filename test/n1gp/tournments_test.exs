@@ -124,4 +124,62 @@ defmodule N1gp.TournmentsTest do
       assert %Ecto.Changeset{} = Tournments.change_participant(participant)
     end
   end
+
+  describe "participants_chips" do
+    alias N1gp.Tournments.ParticipantChip
+
+    import N1gp.TournmentsFixtures
+
+    @invalid_attrs %{code: nil, quantity: nil, reg_or_tag: nil}
+
+    test "list_participants_chips/0 returns all participants_chips" do
+      participant_chip = participant_chip_fixture()
+      assert Tournments.list_participants_chips() == [participant_chip]
+    end
+
+    test "get_participant_chip!/1 returns the participant_chip with given id" do
+      participant_chip = participant_chip_fixture()
+      assert Tournments.get_participant_chip!(participant_chip.id) == participant_chip
+    end
+
+    test "create_participant_chip/1 with valid data creates a participant_chip" do
+      valid_attrs = %{code: "some code", quantity: 42, reg_or_tag: "some reg_or_tag"}
+
+      assert {:ok, %ParticipantChip{} = participant_chip} = Tournments.create_participant_chip(valid_attrs)
+      assert participant_chip.code == "some code"
+      assert participant_chip.quantity == 42
+      assert participant_chip.reg_or_tag == "some reg_or_tag"
+    end
+
+    test "create_participant_chip/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tournments.create_participant_chip(@invalid_attrs)
+    end
+
+    test "update_participant_chip/2 with valid data updates the participant_chip" do
+      participant_chip = participant_chip_fixture()
+      update_attrs = %{code: "some updated code", quantity: 43, reg_or_tag: "some updated reg_or_tag"}
+
+      assert {:ok, %ParticipantChip{} = participant_chip} = Tournments.update_participant_chip(participant_chip, update_attrs)
+      assert participant_chip.code == "some updated code"
+      assert participant_chip.quantity == 43
+      assert participant_chip.reg_or_tag == "some updated reg_or_tag"
+    end
+
+    test "update_participant_chip/2 with invalid data returns error changeset" do
+      participant_chip = participant_chip_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tournments.update_participant_chip(participant_chip, @invalid_attrs)
+      assert participant_chip == Tournments.get_participant_chip!(participant_chip.id)
+    end
+
+    test "delete_participant_chip/1 deletes the participant_chip" do
+      participant_chip = participant_chip_fixture()
+      assert {:ok, %ParticipantChip{}} = Tournments.delete_participant_chip(participant_chip)
+      assert_raise Ecto.NoResultsError, fn -> Tournments.get_participant_chip!(participant_chip.id) end
+    end
+
+    test "change_participant_chip/1 returns a participant_chip changeset" do
+      participant_chip = participant_chip_fixture()
+      assert %Ecto.Changeset{} = Tournments.change_participant_chip(participant_chip)
+    end
+  end
 end

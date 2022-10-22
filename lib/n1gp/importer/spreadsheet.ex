@@ -46,10 +46,10 @@ defmodule N1gp.Importer.Spreadsheet do
     setup_trs = Floki.find(document, "tr")
 
     %{
-      # folder:
-      #   setup_trs
-      #   |> Enum.map(&parse_chip_from_setup_tr/1)
-      #   |> Enum.reject(& &1 == nil),
+      folder:
+        setup_trs
+        |> Enum.map(&parse_chip_from_setup_tr/1)
+        |> Enum.reject(& &1 == nil),
       navicust:
         setup_trs
         |> Enum.map(&parse_navicust_from_setup_tr/1)
@@ -103,9 +103,9 @@ defmodule N1gp.Importer.Spreadsheet do
           {quantity, _rest} ->
             %{
               quantity: quantity,
-              chip_name: chip_name,
+              name: chip_name,
               code: code,
-              reg_tag: reg_tag
+              reg_or_tag: reg_tag
             }
 
           _ ->

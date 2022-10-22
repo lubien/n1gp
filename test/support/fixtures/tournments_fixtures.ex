@@ -43,4 +43,20 @@ defmodule N1gp.TournmentsFixtures do
 
     participant
   end
+
+  @doc """
+  Generate a participant_chip.
+  """
+  def participant_chip_fixture(attrs \\ %{}) do
+    {:ok, participant_chip} =
+      attrs
+      |> Enum.into(%{
+        code: "some code",
+        quantity: 42,
+        reg_or_tag: "some reg_or_tag"
+      })
+      |> N1gp.Tournments.create_participant_chip()
+
+    participant_chip
+  end
 end

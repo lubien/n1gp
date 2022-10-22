@@ -6,8 +6,10 @@ defmodule N1gp.Tournments do
   import Ecto.Query, warn: false
   alias N1gp.Repo
 
+  alias N1gp.Chips
   alias N1gp.Tournments.Tournment
   alias N1gp.Tournments.Participant
+  alias N1gp.Tournments.ParticipantChip
 
   def import_tournment(attrs) do
     Repo.transaction(fn ->
@@ -27,13 +29,15 @@ defmodule N1gp.Tournments do
 
       participant_changesets =
         tournment_attrs.participants
-        |> Enum.map(
-          &Map.merge(&1, %{
+        |> Enum.map(fn participant ->
+          participant
+          |> Map.delete(:folder)
+          |> Map.merge(%{
             inserted_at: {:placeholder, :timestamp},
             updated_at: {:placeholder, :timestamp},
             tournment_id: tournment.id
-          }
-        ))
+          })
+        end)
 
       fields = [
         :discord_name,
@@ -50,6 +54,49 @@ defmodule N1gp.Tournments do
         conflict_target: [:tournment_id, :entrant_no],
         on_conflict: {:replace, fields}
       )
+
+      chip_id_by_name =
+
+        Chips.list_chips()
+        |> Enum.flat_map(fn chip ->
+          [{chip.name, chip.id}] ++ Enum.map(chip.aliases, fn a ->{a, chip.id} end)
+        end)
+        |> Enum.into(%{})
+
+      fields = [
+        :code,
+        :quantity,
+        :reg_or_tag,
+      ]
+
+      participants_chips =
+        tournment_attrs.participants
+        |> Enum.flat_map(fn participant ->
+          participant.folder
+          |> Enum.map(fn chip ->
+            participant = Enum.find(participants, & &1.entrant_no == participant.entrant_no)
+
+            chip
+            |> Map.delete(:name)
+            |> Map.merge(%{
+              inserted_at: {:placeholder, :timestamp},
+              updated_at: {:placeholder, :timestamp},
+              chip_id: chip_id_by_name[chip.name],
+              participant_id: participant.id,
+            })
+          end)
+        end)
+        # TODO: find out which are duplicated
+        |> Enum.uniq_by(&"#{&1.chip_id}:#{&1.participant_id}")
+
+
+      {_count, participants_chips} =
+        Repo.insert_all(ParticipantChip, participants_chips,
+          returning: true,
+          placeholders: placeholders,
+          conflict_target: [:chip_id, :participant_id],
+          on_conflict: {:replace, fields}
+        )
     end)
   end
 
