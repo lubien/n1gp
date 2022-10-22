@@ -17,7 +17,7 @@ defmodule N1gp.Importer do
       elements: parse_chip_list(raw["Element"], "/"),
       mb: parse_chip_int(raw["MB"]),
       atk: parse_chip_int(raw["ATK"]),
-      codes: parse_chip_list(raw["Codes"]),
+      codes: parse_chip_list(raw["Codes"], " "),
       description: parse_chip_or_nil(raw["Description"]),
       image: parse_chip_or_nil(raw["Image"]),
       more_details: parse_chip_list(raw["MoreDetails"]),
