@@ -16,7 +16,6 @@ defmodule N1gp.Chips do
 
         create_chip(chip, conflict_target: :name, on_conflict: {:replace, fields})
       end)
-      |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
     end)
   end
 

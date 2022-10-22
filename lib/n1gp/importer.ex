@@ -80,7 +80,6 @@ defmodule N1gp.Importer do
     challonge_participants =
       File.read!("priv/tournments/nv2022c12bm3/round-robin/participants.json")
       |> Jason.decode!()
-      # |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
 
     challonge_matches =
       File.read!("priv/tournments/nv2022c12bm3/round-robin/matches.json")
@@ -92,7 +91,6 @@ defmodule N1gp.Importer do
       round_participants
       |> Enum.map(& {&1.challonge_id, &1})
       |> Enum.into(%{})
-      # |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
 
     matches = map_matches(challonge_matches, round_participants_by_challonge_id)
 
