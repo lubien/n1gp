@@ -56,22 +56,25 @@ defmodule N1gp.Importer do
     name = Keyword.fetch!(opts, :name)
     key = Keyword.fetch!(opts, :key)
     type = Keyword.fetch!(opts, :type)
-    # rounds = Keyword.fetch!(opts, :rounds)
+    rounds = Keyword.fetch!(opts, :rounds)
 
     participants = Spreadsheet.get_participants(key)
 
-    # rounds = Enum.map(rounds, &get_round(&1, participants))
+    rounds =
+      rounds
+      |> Enum.with_index()
+      |> Enum.map(&get_round(&1, participants))
 
     %{
       key: key,
       name: name,
       type: type,
-      # rounds: rounds,
+      rounds: rounds,
       participants: participants
     }
   end
 
-  def get_round(round, participants) do
+  def get_round({_round, position}, participants) do
     challonge_tournment =
       File.read!("priv/tournments/nv2022c12bm3/round-robin/tournment.json")
       |> Jason.decode!()
@@ -95,11 +98,16 @@ defmodule N1gp.Importer do
     matches = map_matches(challonge_matches, round_participants_by_challonge_id)
 
     %{
+      # challonge_id: round[:challonge_id],
+      position: position,
       name: challonge_tournment["name"],
       challonge_id: challonge_tournment["url"],
-      tournament_type: challonge_tournment["tournament_type"],
-      participants: round_participants,
-      matches: matches
+      type: challonge_tournment["tournament_type"],
+      started_at: parse_datetime_utc(challonge_tournment["started_at"]),
+      completed_at: parse_datetime_utc(challonge_tournment["completed_at"]),
+      # participants: round_participants,
+      # TODO: winner
+      # matches: matches
     }
   end
 
@@ -173,6 +181,19 @@ defmodule N1gp.Importer do
     case DateTime.from_iso8601(date) do
       {:ok, datetime, _offset} ->
         datetime
+
+      _ ->
+        nil
+    end
+  end
+  def parse_datetime_utc(nil) do
+    nil
+  end
+  def parse_datetime_utc(date) do
+    case DateTime.from_iso8601(date) do
+      {:ok, datetime, _offset} ->
+        datetime
+        |> DateTime.truncate(:second)
 
       _ ->
         nil

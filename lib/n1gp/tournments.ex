@@ -10,6 +10,8 @@ defmodule N1gp.Tournments do
   alias N1gp.Tournments.Tournment
   alias N1gp.Tournments.Participant
   alias N1gp.Tournments.ParticipantChip
+  alias N1gp.Rounds
+  alias N1gp.Rounds.Round
 
   def import_tournment(attrs) do
     Repo.transaction(fn ->
@@ -95,6 +97,34 @@ defmodule N1gp.Tournments do
           returning: true,
           placeholders: placeholders,
           conflict_target: [:chip_id, :participant_id],
+          on_conflict: {:replace, fields}
+        )
+
+      fields = [
+        :position,
+        :name,
+        :type,
+        :started_at,
+        :completed_at,
+      ]
+
+      rounds =
+        tournment_attrs.rounds
+        |> Enum.map(fn round ->
+          round
+          |> Map.merge(%{
+            inserted_at: {:placeholder, :timestamp},
+            updated_at: {:placeholder, :timestamp},
+            tournment_id: tournment.id
+          })
+        end)
+        |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+
+      {_count, rounds} =
+        Repo.insert_all(Round, rounds,
+          returning: true,
+          placeholders: placeholders,
+          conflict_target: :challonge_id,
           on_conflict: {:replace, fields}
         )
     end)
