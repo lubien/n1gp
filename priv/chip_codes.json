@@ -1,0 +1,823 @@
+// https://megaman.fandom.com/wiki/List_of_Mega_Man_Battle_Network_6_Battle_Chips
+
+// copy(
+//   Array.from(t.querySelectorAll("tr"))
+//     .map((tr) =>
+//       Array.from(tr.querySelectorAll("td"))
+//         .slice(0, 3)
+//         .map((x) => x.innerText)
+//     )
+//     .map((x) => {
+//       if (x.length === 3) {
+//         return ({
+//           code: x[0],
+//           name: x[2].split('\n')[0]
+//         })
+//       }
+//     })
+//     .filter(x => x)
+// )
+
+
+[
+    {
+        "code": "001",
+        "name": "Cannon"
+    },
+    {
+        "code": "002",
+        "name": "HiCannon"
+    },
+    {
+        "code": "003",
+        "name": "M-Cannon"
+    },
+    {
+        "code": "004",
+        "name": "AirShot"
+    },
+    {
+        "code": "005",
+        "name": "Vulcan1"
+    },
+    {
+        "code": "006",
+        "name": "Vulcan2"
+    },
+    {
+        "code": "007",
+        "name": "Vulcan3"
+    },
+    {
+        "code": "008",
+        "name": "SuprVulc"
+    },
+    {
+        "code": "009",
+        "name": "Spreadr1"
+    },
+    {
+        "code": "010",
+        "name": "Spreadr2"
+    },
+    {
+        "code": "011",
+        "name": "Spreadr3"
+    },
+    {
+        "code": "012",
+        "name": "TankCan1"
+    },
+    {
+        "code": "013",
+        "name": "TankCan2"
+    },
+    {
+        "code": "014",
+        "name": "TankCan3"
+    },
+    {
+        "code": "015",
+        "name": "GunDelS1"
+    },
+    {
+        "code": "016",
+        "name": "GunDelS2"
+    },
+    {
+        "code": "017",
+        "name": "GunDelS3"
+    },
+    {
+        "code": "018",
+        "name": "YoYo"
+    },
+    {
+        "code": "019",
+        "name": "FireBrn1"
+    },
+    {
+        "code": "020",
+        "name": "FireBrn2"
+    },
+    {
+        "code": "021",
+        "name": "FireBrn3"
+    },
+    {
+        "code": "022",
+        "name": "WideSht"
+    },
+    {
+        "code": "023",
+        "name": "TrnArrw1"
+    },
+    {
+        "code": "024",
+        "name": "TrnArrw2"
+    },
+    {
+        "code": "025",
+        "name": "TrnArrw3"
+    },
+    {
+        "code": "026",
+        "name": "BblStar1"
+    },
+    {
+        "code": "027",
+        "name": "BblStar2"
+    },
+    {
+        "code": "028",
+        "name": "BblStar3"
+    },
+    {
+        "code": "029",
+        "name": "Thunder"
+    },
+    {
+        "code": "030",
+        "name": "DolThdr1"
+    },
+    {
+        "code": "031",
+        "name": "DolThdr2"
+    },
+    {
+        "code": "032",
+        "name": "DolThdr3"
+    },
+    {
+        "code": "033",
+        "name": "ElcPuls1"
+    },
+    {
+        "code": "034",
+        "name": "ElcPuls2"
+    },
+    {
+        "code": "035",
+        "name": "ElcPuls3"
+    },
+    {
+        "code": "036",
+        "name": "CornSht1"
+    },
+    {
+        "code": "037",
+        "name": "CornSht2"
+    },
+    {
+        "code": "038",
+        "name": "CornSht3"
+    },
+    {
+        "code": "039",
+        "name": "RskyHny1"
+    },
+    {
+        "code": "040",
+        "name": "RskyHny2"
+    },
+    {
+        "code": "041",
+        "name": "RskyHny3"
+    },
+    {
+        "code": "042",
+        "name": "RlngLog1"
+    },
+    {
+        "code": "043",
+        "name": "RlngLog2"
+    },
+    {
+        "code": "044",
+        "name": "RlngLog3"
+    },
+    {
+        "code": "045",
+        "name": "IronShl1"
+    },
+    {
+        "code": "046",
+        "name": "IronShl2"
+    },
+    {
+        "code": "047",
+        "name": "IronShl3"
+    },
+    {
+        "code": "048",
+        "name": "AuraHed1"
+    },
+    {
+        "code": "049",
+        "name": "AuraHed2"
+    },
+    {
+        "code": "050",
+        "name": "AuraHed3"
+    },
+    {
+        "code": "051",
+        "name": "AirHocky"
+    },
+    {
+        "code": "052",
+        "name": "DrilArm"
+    },
+    {
+        "code": "053",
+        "name": "Tornado"
+    },
+    {
+        "code": "054",
+        "name": "Static"
+    },
+    {
+        "code": "055",
+        "name": "MachGun1"
+    },
+    {
+        "code": "056",
+        "name": "MachGun2"
+    },
+    {
+        "code": "057",
+        "name": "MachGun3"
+    },
+    {
+        "code": "058",
+        "name": "MiniBomb"
+    },
+    {
+        "code": "059",
+        "name": "BigBomb"
+    },
+    {
+        "code": "060",
+        "name": "EnergBom"
+    },
+    {
+        "code": "061",
+        "name": "MegEnBom"
+    },
+    {
+        "code": "062",
+        "name": "FlshBom1"
+    },
+    {
+        "code": "063",
+        "name": "FlshBom2"
+    },
+    {
+        "code": "064",
+        "name": "FlshBom3"
+    },
+    {
+        "code": "065",
+        "name": "BlkBomb"
+    },
+    {
+        "code": "066",
+        "name": "BugBomb"
+    },
+    {
+        "code": "067",
+        "name": "GrasSeed"
+    },
+    {
+        "code": "068",
+        "name": "IceSeed"
+    },
+    {
+        "code": "069",
+        "name": "PoisSeed"
+    },
+    {
+        "code": "070",
+        "name": "Sword"
+    },
+    {
+        "code": "071",
+        "name": "WideSwrd"
+    },
+    {
+        "code": "072",
+        "name": "LongSwrd"
+    },
+    {
+        "code": "073",
+        "name": "WideBlde"
+    },
+    {
+        "code": "074",
+        "name": "LongBlde"
+    },
+    {
+        "code": "075",
+        "name": "FireSwrd"
+    },
+    {
+        "code": "076",
+        "name": "AquaSwrd"
+    },
+    {
+        "code": "077",
+        "name": "ElecSwrd"
+    },
+    {
+        "code": "078",
+        "name": "BambSwrd"
+    },
+    {
+        "code": "079",
+        "name": "WindRack"
+    },
+    {
+        "code": "080",
+        "name": "StepSwrd"
+    },
+    {
+        "code": "081",
+        "name": "VarSwrd"
+    },
+    {
+        "code": "082",
+        "name": "NeoVari"
+    },
+    {
+        "code": "083",
+        "name": "MoonBld"
+    },
+    {
+        "code": "084",
+        "name": "Muramasa"
+    },
+    {
+        "code": "085",
+        "name": "MchnSwrd"
+    },
+    {
+        "code": "086",
+        "name": "ElemSwrd"
+    },
+    {
+        "code": "087",
+        "name": "AssnSwrd"
+    },
+    {
+        "code": "088",
+        "name": "CrakShot"
+    },
+    {
+        "code": "089",
+        "name": "DublShot"
+    },
+    {
+        "code": "090",
+        "name": "TrplShot"
+    },
+    {
+        "code": "091",
+        "name": "Rflectr1"
+    },
+    {
+        "code": "092",
+        "name": "Rflectr2"
+    },
+    {
+        "code": "093",
+        "name": "Rflectr3"
+    },
+    {
+        "code": "094",
+        "name": "WaveArm1"
+    },
+    {
+        "code": "095",
+        "name": "WaveArm2"
+    },
+    {
+        "code": "096",
+        "name": "WaveArm3"
+    },
+    {
+        "code": "097",
+        "name": "SandWrm1"
+    },
+    {
+        "code": "098",
+        "name": "SandWrm2"
+    },
+    {
+        "code": "099",
+        "name": "SandWrm3"
+    },
+    {
+        "code": "100",
+        "name": "SumnBlk1"
+    },
+    {
+        "code": "101",
+        "name": "SumnBlk2"
+    },
+    {
+        "code": "102",
+        "name": "SumnBlk3"
+    },
+    {
+        "code": "103",
+        "name": "Snake"
+    },
+    {
+        "code": "104",
+        "name": "NumbrBl"
+    },
+    {
+        "code": "105",
+        "name": "FireHit1"
+    },
+    {
+        "code": "106",
+        "name": "FireHit2"
+    },
+    {
+        "code": "107",
+        "name": "FireHit3"
+    },
+    {
+        "code": "108",
+        "name": "BurnSqr1"
+    },
+    {
+        "code": "109",
+        "name": "BurnSqr2"
+    },
+    {
+        "code": "110",
+        "name": "BurnSqr3"
+    },
+    {
+        "code": "111",
+        "name": "Meteors"
+    },
+    {
+        "code": "112",
+        "name": "AquaNdl1"
+    },
+    {
+        "code": "113",
+        "name": "AquaNdl2"
+    },
+    {
+        "code": "114",
+        "name": "AquaNdl3"
+    },
+    {
+        "code": "115",
+        "name": "BlzrdBal"
+    },
+    {
+        "code": "116",
+        "name": "Sensor1"
+    },
+    {
+        "code": "117",
+        "name": "Sensor2"
+    },
+    {
+        "code": "118",
+        "name": "Sensor3"
+    },
+    {
+        "code": "119",
+        "name": "Boomer"
+    },
+    {
+        "code": "120",
+        "name": "HiBoomer"
+    },
+    {
+        "code": "121",
+        "name": "M-Boomer"
+    },
+    {
+        "code": "122",
+        "name": "Lance"
+    },
+    {
+        "code": "123",
+        "name": "HeatDrgn"
+    },
+    {
+        "code": "124",
+        "name": "ElecDrgn"
+    },
+    {
+        "code": "125",
+        "name": "AquaDrgn"
+    },
+    {
+        "code": "126",
+        "name": "WoodDrgn"
+    },
+    {
+        "code": "127",
+        "name": "GolmHit1"
+    },
+    {
+        "code": "128",
+        "name": "GolmHit2"
+    },
+    {
+        "code": "129",
+        "name": "GolmHit3"
+    },
+    {
+        "code": "130",
+        "name": "JustcOne"
+    },
+    {
+        "code": "131",
+        "name": "AirSpin1"
+    },
+    {
+        "code": "132",
+        "name": "AirSpin2"
+    },
+    {
+        "code": "133",
+        "name": "AirSpin3"
+    },
+    {
+        "code": "134",
+        "name": "Wind"
+    },
+    {
+        "code": "135",
+        "name": "Fan"
+    },
+    {
+        "code": "136",
+        "name": "Magnum"
+    },
+    {
+        "code": "137",
+        "name": "CircGun"
+    },
+    {
+        "code": "138",
+        "name": "RockCube"
+    },
+    {
+        "code": "139",
+        "name": "LilBolr1"
+    },
+    {
+        "code": "140",
+        "name": "LilBolr2"
+    },
+    {
+        "code": "141",
+        "name": "LilBolr3"
+    },
+    {
+        "code": "142",
+        "name": "AirRaid1"
+    },
+    {
+        "code": "143",
+        "name": "AirRaid2"
+    },
+    {
+        "code": "144",
+        "name": "AirRaid3"
+    },
+    {
+        "code": "145",
+        "name": "TimeBom1"
+    },
+    {
+        "code": "146",
+        "name": "TimeBom2"
+    },
+    {
+        "code": "147",
+        "name": "TimeBom3"
+    },
+    {
+        "code": "148",
+        "name": "Mine"
+    },
+    {
+        "code": "149",
+        "name": "Fanfare"
+    },
+    {
+        "code": "150",
+        "name": "Discord"
+    },
+    {
+        "code": "151",
+        "name": "Timpani"
+    },
+    {
+        "code": "152",
+        "name": "Silence"
+    },
+    {
+        "code": "153",
+        "name": "VDoll"
+    },
+    {
+        "code": "154",
+        "name": "Guardian"
+    },
+    {
+        "code": "155",
+        "name": "Anubis"
+    },
+    {
+        "code": "156",
+        "name": "Recov10"
+    },
+    {
+        "code": "157",
+        "name": "Recov30"
+    },
+    {
+        "code": "158",
+        "name": "Recov50"
+    },
+    {
+        "code": "159",
+        "name": "Recov80"
+    },
+    {
+        "code": "160",
+        "name": "Recov120"
+    },
+    {
+        "code": "161",
+        "name": "Recov150"
+    },
+    {
+        "code": "162",
+        "name": "Recov200"
+    },
+    {
+        "code": "163",
+        "name": "Recov300"
+    },
+    {
+        "code": "164",
+        "name": "PanlGrab"
+    },
+    {
+        "code": "165",
+        "name": "AreaGrab"
+    },
+    {
+        "code": "166",
+        "name": "GrabBnsh"
+    },
+    {
+        "code": "167",
+        "name": "GrabRvng"
+    },
+    {
+        "code": "168",
+        "name": "PnlRetrn"
+    },
+    {
+        "code": "169",
+        "name": "Geddon"
+    },
+    {
+        "code": "170",
+        "name": "HolyPanl"
+    },
+    {
+        "code": "171",
+        "name": "Snctuary"
+    },
+    {
+        "code": "172",
+        "name": "ComingRd"
+    },
+    {
+        "code": "173",
+        "name": "GoingRd"
+    },
+    {
+        "code": "174",
+        "name": "SloGauge"
+    },
+    {
+        "code": "175",
+        "name": "FstGauge"
+    },
+    {
+        "code": "176",
+        "name": "FullCust"
+    },
+    {
+        "code": "177",
+        "name": "BusterUp"
+    },
+    {
+        "code": "178",
+        "name": "BugFix"
+    },
+    {
+        "code": "179",
+        "name": "Invisibl"
+    },
+    {
+        "code": "180",
+        "name": "Barrier"
+    },
+    {
+        "code": "181",
+        "name": "Barr100"
+    },
+    {
+        "code": "182",
+        "name": "Barr200"
+    },
+    {
+        "code": "183",
+        "name": "BblWrap"
+    },
+    {
+        "code": "184",
+        "name": "LifeAur"
+    },
+    {
+        "code": "185",
+        "name": "MagCoil"
+    },
+    {
+        "code": "186",
+        "name": "ColArmy"
+    },
+    {
+        "code": "187",
+        "name": "ElemTrap"
+    },
+    {
+        "code": "188",
+        "name": "AntiNavi"
+    },
+    {
+        "code": "189",
+        "name": "AntiDmg"
+    },
+    {
+        "code": "190",
+        "name": "AntiSwrd"
+    },
+    {
+        "code": "191",
+        "name": "AntiRecv"
+    },
+    {
+        "code": "192",
+        "name": "WhiCapsl"
+    },
+    {
+        "code": "193",
+        "name": "Uninstll"
+    },
+    {
+        "code": "194",
+        "name": "CopyDmg"
+    },
+    {
+        "code": "195",
+        "name": "LifeSync"
+    },
+    {
+        "code": "196",
+        "name": "Atk+10"
+    },
+    {
+        "code": "197",
+        "name": "Atk+30"
+    },
+    {
+        "code": "198",
+        "name": "Navi+20"
+    },
+    {
+        "code": "199",
+        "name": "ColorPt"
+    },
+    {
+        "code": "200",
+        "name": "DblPoint"
+    }
+]

@@ -4,7 +4,52 @@ defmodule N1gp.Importer do
     "weenie#1984" => "weenie"
   }
 
-  def import(opts) do
+  def import_chips do
+    chips =
+      File.read!("priv/chip_library.json")
+      |> Jason.decode!()
+      |> Enum.map(&parse_chip/1)
+  end
+
+  def parse_chip(raw) do
+    %{
+      name: raw["Name"],
+      element: parse_chip_list(raw["Element"], "/"),
+      mb: parse_chip_int(raw["MB"]),
+      atk: parse_chip_int(raw["ATK"]),
+      codes: parse_chip_list(raw["Codes"]),
+      description: parse_chip_or_nil(raw["Description"]),
+      image: parse_chip_or_nil(raw["Image"]),
+      more_details: parse_chip_list(raw["MoreDetails"]),
+      aliases: parse_chip_list(raw["Alias"]),
+    }
+  end
+
+  def parse_chip_int(nil), do: nil
+  def parse_chip_int("--"), do: nil
+  def parse_chip_int(mb) do
+    case Integer.parse(mb) do
+      {int, _rest} ->
+        int
+
+      _ ->
+        mb
+    end
+  end
+
+  def parse_chip_list(nil, _separator), do: []
+  def parse_chip_list("--", _separator), do: []
+  def parse_chip_list(str, separator \\ ",") do
+    str
+    |> String.split(separator)
+    |> Enum.map(&String.trim/1)
+  end
+
+  def parse_chip_or_nil(nil), do: nil
+  def parse_chip_or_nil(""), do: nil
+  def parse_chip_or_nil(raw), do: raw
+
+  def import_tournment(opts) do
     name = Keyword.fetch!(opts, :name)
     key = Keyword.fetch!(opts, :key)
     rounds = Keyword.fetch!(opts, :rounds)
@@ -270,16 +315,19 @@ end
 # |> Jason.encode!()
 # |> IO.puts
 
-N1gp.Importer.import(
-  key: "nv2022c12bm3",
-  name: "Blood Moon 2022 #3",
-  rounds: [
-    %{
-      # name: "NEW MOON 2022 Cycle 12: BLOOD MOON #3 ROUND ROBIN",
-      # type: "round_robin",
-      challonge_id: "bv129coy"
-    },
-    # TODO: top_cut
-  ]
-)
+# N1gp.Importer.import_tournment(
+#   key: "nv2022c12bm3",
+#   name: "Blood Moon 2022 #3",
+#   rounds: [
+#     %{
+#       # name: "NEW MOON 2022 Cycle 12: BLOOD MOON #3 ROUND ROBIN",
+#       # type: "round_robin",
+#       challonge_id: "bv129coy"
+#     },
+#     # TODO: top_cut
+#   ]
+# )
+
+N1gp.Importer.import_chips()
+# |> Enum.filter(& &1.code == nil)
 |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
