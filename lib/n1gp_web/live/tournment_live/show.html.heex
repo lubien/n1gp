@@ -1,0 +1,36 @@
+<h1>Show Tournment</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.tournment_show_path(@socket, :show, @tournment)}>
+    <.live_component
+      module={N1gpWeb.TournmentLive.FormComponent}
+      id={@tournment.id}
+      title={@page_title}
+      action={@live_action}
+      tournment={@tournment}
+      return_to={Routes.tournment_show_path(@socket, :show, @tournment)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Key:</strong>
+    <%= @tournment.key %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @tournment.name %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @tournment.type %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.tournment_show_path(@socket, :edit, @tournment), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.tournment_index_path(@socket, :index) %></span>

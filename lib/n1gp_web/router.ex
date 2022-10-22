@@ -24,6 +24,13 @@ defmodule N1gpWeb.Router do
 
     live "/chips/:id", ChipLive.Show, :show
     live "/chips/:id/show/edit", ChipLive.Show, :edit
+
+    live "/tournments", TournmentLive.Index, :index
+    live "/tournments/new", TournmentLive.Index, :new
+    live "/tournments/:id/edit", TournmentLive.Index, :edit
+
+    live "/tournments/:id", TournmentLive.Show, :show
+    live "/tournments/:id/show/edit", TournmentLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

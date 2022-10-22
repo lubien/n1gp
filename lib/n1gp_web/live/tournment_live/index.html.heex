@@ -1,0 +1,43 @@
+<h1>Listing Tournments</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.tournment_index_path(@socket, :index)}>
+    <.live_component
+      module={N1gpWeb.TournmentLive.FormComponent}
+      id={@tournment.id || :new}
+      title={@page_title}
+      action={@live_action}
+      tournment={@tournment}
+      return_to={Routes.tournment_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Name</th>
+      <th>Type</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tournments">
+    <%= for tournment <- @tournments do %>
+      <tr id={"tournment-#{tournment.id}"}>
+        <td><%= tournment.key %></td>
+        <td><%= tournment.name %></td>
+        <td><%= tournment.type %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.tournment_show_path(@socket, :show, tournment) %></span>
+          <span><%= live_patch "Edit", to: Routes.tournment_index_path(@socket, :edit, tournment) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: tournment.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Tournment", to: Routes.tournment_index_path(@socket, :new) %></span>

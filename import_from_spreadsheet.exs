@@ -136,9 +136,11 @@ end
 # |> Jason.encode!()
 # |> IO.puts
 
-# N1gp.Importer.import_tournment(
-#   key: "nv2022c12bm3",
-#   name: "Blood Moon 2022 #3",
+N1gp.Tournments.import_tournment(
+  key: "nv2022c12bm3",
+  name: "Blood Moon 2022 #3",
+  type: "blood_moon"
+)
 #   rounds: [
 #     %{
 #       # name: "NEW MOON 2022 Cycle 12: BLOOD MOON #3 ROUND ROBIN",

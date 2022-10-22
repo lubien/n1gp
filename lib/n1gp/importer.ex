@@ -52,16 +52,18 @@ defmodule N1gp.Importer do
   def import_tournment(opts) do
     name = Keyword.fetch!(opts, :name)
     key = Keyword.fetch!(opts, :key)
-    rounds = Keyword.fetch!(opts, :rounds)
+    type = Keyword.fetch!(opts, :type)
+    # rounds = Keyword.fetch!(opts, :rounds)
 
-    participants = N1gp.Spreadsheet.get_participants("nv2022c12bm3")
+    # participants = N1gp.Spreadsheet.get_participants("nv2022c12bm3")
 
-    rounds = Enum.map(rounds, &get_round(&1, participants))
+    # rounds = Enum.map(rounds, &get_round(&1, participants))
 
     %{
       key: key,
       name: name,
-      rounds: rounds,
+      type: type
+      # rounds: rounds,
       # participants: participants
     }
   end
