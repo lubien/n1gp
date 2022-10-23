@@ -28,8 +28,6 @@
           </div>
         </li>
       <% end %>
-
-      <!-- More items... -->
     </ul>
   </div>
 
@@ -55,8 +53,6 @@
             </svg>
           </a>
         </li>
-
-        <!-- More projects... -->
       </ul>
     </div>
   <% end %>
@@ -111,8 +107,6 @@
       </table>
     </div>
   </div>
-  <span><%= live_patch "Edit", to: Routes.tournment_show_path(@socket, :edit, @tournment), class: "button" %></span> |
-  <span><%= live_redirect "Back", to: Routes.tournment_index_path(@socket, :index) %></span>
 </:tab>
 
 <:tab id={:round}>
@@ -330,50 +324,50 @@
 </:tab>
 
 <:tab id={:participant}>
-<div class="flex min-w-0 flex-1 flex-col overflow-hidden max-w-4xl mx-auto">
-  <div class="border-b border-gray-200 pb-5 mt-4">
-    <h3 class="text-lg font-medium leading-6 text-gray-900"><%= @participant.name %></h3>
-    <p class="mt-2 max-w-4xl text-sm text-gray-500"><%= @participant.discord_name %></p>
-  </div>
+  <div class="flex min-w-0 flex-1 flex-col overflow-hidden max-w-4xl mx-auto">
+    <div class="border-b border-gray-200 pb-5 mt-4">
+      <h3 class="text-lg font-medium leading-6 text-gray-900"><%= @participant.name %></h3>
+      <p class="mt-2 max-w-4xl text-sm text-gray-500"><%= @participant.discord_name %></p>
+    </div>
 
-  <div class=" z-0 flex flex-1 overflow-hidden">
-    <main class="z-0 flex-1 overflow-y-auto focus:outline-none">
-      <div class="inset-0 py-6 px-4 sm:px-6 lg:px-8">
-        <div class="h-full rounded-lg border-2 border-dashed border-gray-200">
-          <ul role="list" class="divide-y divide-gray-200">
-            <%= for {chip, pc} <- @participant_chips do %>
+    <div class=" z-0 flex flex-1 overflow-hidden">
+      <main class="z-0 flex-1 overflow-y-auto focus:outline-none">
+        <div class="inset-0 py-6 px-4 sm:px-6 lg:px-8">
+          <div class="h-full rounded-lg border-2 border-dashed border-gray-200">
+            <ul role="list" class="divide-y divide-gray-200">
+              <%= for {chip, pc} <- @participant_chips do %>
+                <li class="flex py-4 pl-4">
+                  <img class="h-10 w-10 rounded-full" src={chip.image} alt="">
+                  <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900"><%= chip.name %> <%= pc.code %> x<%= pc.quantity %></p>
+                    <p class="text-sm text-gray-500"><%= pc.reg_or_tag %></p>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <!-- End main area -->
+      </main>
+      <aside class="w-96 flex-shrink-0 overflow-y-auto xl:flex xl:flex-col">
+        <!-- Start secondary column (hidden on smaller screens) -->
+        <div class=" inset-0 py-6 px-4 sm:px-6 lg:px-8">
+          <div class="h-full rounded-lg border-2 border-dashed border-gray-200">
+            <%= for cust <- @participant.navicust do %>
               <li class="flex py-4 pl-4">
-                <img class="h-10 w-10 rounded-full" src={chip.image} alt="">
-                <div class="ml-3">
-                  <p class="text-sm font-medium text-gray-900"><%= chip.name %> <%= pc.code %> x<%= pc.quantity %></p>
-                  <p class="text-sm text-gray-500"><%= pc.reg_or_tag %></p>
+                <div class="ml-3 w-full">
+                  <p class="text-sm font-medium text-gray-900"><%= if(cust["program_name"] in ["", nil], do: "?", else: cust["program_name"]) %></p>
+                  <p class="text-sm text-gray-500">
+                    <.navicust_description description={cust["description"]} />
+                  </p>
                 </div>
               </li>
             <% end %>
-          </ul>
+          </div>
         </div>
-      </div>
-      <!-- End main area -->
-    </main>
-    <aside class="w-96 flex-shrink-0 overflow-y-auto xl:flex xl:flex-col">
-      <!-- Start secondary column (hidden on smaller screens) -->
-      <div class=" inset-0 py-6 px-4 sm:px-6 lg:px-8">
-        <div class="h-full rounded-lg border-2 border-dashed border-gray-200">
-          <%= for cust <- @participant.navicust do %>
-            <li class="flex py-4 pl-4">
-              <div class="ml-3 w-full">
-                <p class="text-sm font-medium text-gray-900"><%= if(cust["program_name"] in ["", nil], do: "?", else: cust["program_name"]) %></p>
-                <p class="text-sm text-gray-500">
-                  <.navicust_description description={cust["description"]} />
-                </p>
-              </div>
-            </li>
-          <% end %>
-        </div>
-      </div>
-      <!-- End secondary column -->
-    </aside>
+        <!-- End secondary column -->
+      </aside>
+    </div>
   </div>
-</div>
 </:tab>
 </.tournment_layout>

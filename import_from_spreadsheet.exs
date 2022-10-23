@@ -12,19 +12,19 @@ import Ecto.Query
 # |> Jason.encode!()
 # |> IO.puts
 
-N1gp.Tournments.import_tournment(key: "nv2022c12bm3",name: "Blood Moon 2022 #3",type: "blood_moon",
+# N1gp.Tournments.import_tournment(key: "nv2022c12bm3",name: "Blood Moon 2022 #3",type: "blood_moon",
+# # N1gp.Importer.import_tournment(key: "nv2022c12bm3",name: "Blood Moon 2022 #3",type: "blood_moon",
+#   rounds: [
+#     %{challonge_id: "bv129coy"},
+#     %{challonge_id: "5almu1d0"},
+#   ]
+# )
+
+N1gp.Tournments.import_tournment(key: "nv2022c16bm4",name: "Blood Moon 2022 #4",type: "blood_moon",
 # N1gp.Importer.import_tournment(key: "nv2022c12bm3",name: "Blood Moon 2022 #3",type: "blood_moon",
   rounds: [
-    %{
-      # name: "NEW MOON 2022 Cycle 12: BLOOD MOON #3 ROUND ROBIN",
-      # type: "round_robin",
-      challonge_id: "bv129coy"
-    },
-    %{
-      # name: "NEW MOON 2022 Cycle 12: BLOOD MOON #3 ROUND ROBIN",
-      # type: "round_robin",
-      challonge_id: "5almu1d0"
-    },
+    %{challonge_id: "xzids384"},
+    %{challonge_id: "gx8fe5rf"},
   ]
 )
 
