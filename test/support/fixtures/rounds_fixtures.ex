@@ -46,4 +46,27 @@ defmodule N1gp.RoundsFixtures do
 
     round_participant
   end
+
+  @doc """
+  Generate a unique match challonge_id.
+  """
+  def unique_match_challonge_id, do: System.unique_integer([:positive])
+
+  @doc """
+  Generate a match.
+  """
+  def match_fixture(attrs \\ %{}) do
+    {:ok, match} =
+      attrs
+      |> Enum.into(%{
+        challonge_id: unique_match_challonge_id(),
+        completed_at: ~U[2022-10-22 10:16:00.000000Z],
+        scores_csv: "some scores_csv",
+        started_at: ~U[2022-10-22 10:16:00.000000Z],
+        state: "some state"
+      })
+      |> N1gp.Rounds.create_match()
+
+    match
+  end
 end

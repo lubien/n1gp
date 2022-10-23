@@ -12,6 +12,7 @@ defmodule N1gp.Tournments do
   alias N1gp.Tournments.ParticipantChip
   alias N1gp.Rounds.Round
   alias N1gp.Rounds.RoundParticipant
+  alias N1gp.Rounds.Match
 
   def import_tournment(attrs) do
     Repo.transaction(fn ->
@@ -112,14 +113,13 @@ defmodule N1gp.Tournments do
         tournment_attrs.rounds
         |> Enum.map(fn round ->
           round
-          |> Map.drop([:participants])
+          |> Map.drop([:participants, :matches])
           |> Map.merge(%{
             inserted_at: {:placeholder, :timestamp},
             updated_at: {:placeholder, :timestamp},
             tournment_id: tournment.id
           })
         end)
-        |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
 
       {_count, rounds} =
         Repo.insert_all(Round, rounds,
@@ -154,13 +154,65 @@ defmodule N1gp.Tournments do
           end)
         end)
 
-      {_count, rounds_participants} =
+      {_count, round_participants} =
         Repo.insert_all(RoundParticipant, round_participants,
         returning: true,
         placeholders: placeholders,
         conflict_target: [:participant_id, :round_id],
         on_conflict: {:replace, fields}
       )
+
+      fields = [
+        :completed_at,
+        :scores_csv,
+        :started_at,
+        :state,
+        :round_id,
+        :participant1_id,
+        :participant2_id,
+        :winner_id,
+      ]
+
+      matches =
+        tournment_attrs.rounds
+        |> Enum.flat_map(fn round ->
+          round_on_db = Enum.find(rounds, & &1.position == round.position)
+
+          round.matches
+          # |> Enum.take(1)
+          |> Enum.map(fn match ->
+            participant1_on_db = Enum.find(participants, & &1.entrant_no == match.participant1_id)
+            participant2_on_db = Enum.find(participants, & &1.entrant_no == match.participant2_id)
+            winner_on_db = Enum.find(participants, & &1.entrant_no == match.winner_id)
+
+            %{
+              challonge_id: match.challonge_id,
+              state: match.state,
+              started_at: match.started_at,
+              completed_at: match.completed_at,
+              scores_csv: match.scores_csv,
+
+              participant1_id: Map.get(participant1_on_db || %{}, :id),
+              participant2_id: Map.get(participant2_on_db || %{}, :id),
+              winner_id: Map.get(winner_on_db || %{}, :id),
+              round_id: round_on_db.id,
+
+              inserted_at: {:placeholder, :timestamp},
+              updated_at: {:placeholder, :timestamp},
+            }
+          end)
+        end)
+
+      # matches |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+
+      {_count, matches} =
+        Repo.insert_all(Match, matches,
+        returning: true,
+        placeholders: placeholders,
+        conflict_target: :challonge_id,
+        on_conflict: {:replace, fields}
+      )
+      # |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
     end)
   end
 

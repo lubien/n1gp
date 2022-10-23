@@ -120,4 +120,66 @@ defmodule N1gp.RoundsTest do
       assert %Ecto.Changeset{} = Rounds.change_round_participant(round_participant)
     end
   end
+
+  describe "matches" do
+    alias N1gp.Rounds.Match
+
+    import N1gp.RoundsFixtures
+
+    @invalid_attrs %{challonge_id: nil, completed_at: nil, scores_csv: nil, started_at: nil, state: nil}
+
+    test "list_matches/0 returns all matches" do
+      match = match_fixture()
+      assert Rounds.list_matches() == [match]
+    end
+
+    test "get_match!/1 returns the match with given id" do
+      match = match_fixture()
+      assert Rounds.get_match!(match.id) == match
+    end
+
+    test "create_match/1 with valid data creates a match" do
+      valid_attrs = %{challonge_id: 42, completed_at: ~U[2022-10-22 10:16:00.000000Z], scores_csv: "some scores_csv", started_at: ~U[2022-10-22 10:16:00.000000Z], state: "some state"}
+
+      assert {:ok, %Match{} = match} = Rounds.create_match(valid_attrs)
+      assert match.challonge_id == 42
+      assert match.completed_at == ~U[2022-10-22 10:16:00.000000Z]
+      assert match.scores_csv == "some scores_csv"
+      assert match.started_at == ~U[2022-10-22 10:16:00.000000Z]
+      assert match.state == "some state"
+    end
+
+    test "create_match/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Rounds.create_match(@invalid_attrs)
+    end
+
+    test "update_match/2 with valid data updates the match" do
+      match = match_fixture()
+      update_attrs = %{challonge_id: 43, completed_at: ~U[2022-10-23 10:16:00.000000Z], scores_csv: "some updated scores_csv", started_at: ~U[2022-10-23 10:16:00.000000Z], state: "some updated state"}
+
+      assert {:ok, %Match{} = match} = Rounds.update_match(match, update_attrs)
+      assert match.challonge_id == 43
+      assert match.completed_at == ~U[2022-10-23 10:16:00.000000Z]
+      assert match.scores_csv == "some updated scores_csv"
+      assert match.started_at == ~U[2022-10-23 10:16:00.000000Z]
+      assert match.state == "some updated state"
+    end
+
+    test "update_match/2 with invalid data returns error changeset" do
+      match = match_fixture()
+      assert {:error, %Ecto.Changeset{}} = Rounds.update_match(match, @invalid_attrs)
+      assert match == Rounds.get_match!(match.id)
+    end
+
+    test "delete_match/1 deletes the match" do
+      match = match_fixture()
+      assert {:ok, %Match{}} = Rounds.delete_match(match)
+      assert_raise Ecto.NoResultsError, fn -> Rounds.get_match!(match.id) end
+    end
+
+    test "change_match/1 returns a match changeset" do
+      match = match_fixture()
+      assert %Ecto.Changeset{} = Rounds.change_match(match)
+    end
+  end
 end

@@ -107,7 +107,7 @@ defmodule N1gp.Importer do
       completed_at: parse_datetime_utc(challonge_tournment["completed_at"]),
       participants: round_participants,
       # TODO: winner
-      # matches: matches
+      matches: matches
     }
   end
 
@@ -163,13 +163,14 @@ defmodule N1gp.Importer do
     challonge_matches
     |> Enum.map(fn %{"match" => match} ->
       %{
-        challonge_id: match["id"],
-        state: match["state"],
         participant1_id: round_participants_by_challonge_id[match["player1_id"]][:entrant_no],
         participant2_id: round_participants_by_challonge_id[match["player2_id"]][:entrant_no],
+        challonge_id: match["id"],
+        state: match["state"],
         winner_id: round_participants_by_challonge_id[match["winner_id"]][:entrant_no],
-        started_at: parse_datetime(match["started_at"]),
-        completed_at: parse_datetime(match["completed_at"])
+        started_at: parse_datetime_utc(match["started_at"]),
+        completed_at: parse_datetime_utc(match["completed_at"]),
+        scores_csv: match["scores_csv"]
       }
     end)
   end
