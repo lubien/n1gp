@@ -153,6 +153,7 @@ defmodule N1gp.Importer do
         challonge_id: remote["participant"]["id"]
       }
     end)
+    |> Enum.filter(& &1.challonge_id != nil)
   end
 
   def same_name_on_challonge?(local, remote) do
