@@ -6,7 +6,9 @@ defmodule N1gp.Tournments.Tournment do
     field :key, :string
     field :name, :string
     field :type, :string
+    has_many :rounds, N1gp.Rounds.Round
     has_many :participants, N1gp.Tournments.Participant
+    has_many :matches, through: [:rounds, :matches]
 
     timestamps()
   end

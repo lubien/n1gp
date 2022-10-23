@@ -151,7 +151,7 @@ defmodule N1gp.Importer do
     else
       unknowns
       |> Enum.find(fn remote ->
-        {Map.drop(local, [:a]), remote["participant"]["display_name"]} |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+        # {Map.drop(local, [:a]), remote["participant"]["display_name"]} |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
         @manual_mappings[local.discord_name] == remote["participant"]["display_name"] ||
         # TODO: improve
         String.bag_distance(remote["participant"]["name"], local.name) >= 0.5

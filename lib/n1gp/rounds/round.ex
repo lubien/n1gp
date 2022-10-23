@@ -10,6 +10,8 @@ defmodule N1gp.Rounds.Round do
     field :started_at, :utc_datetime
     field :type, :string
     field :tournment_id, :id
+    has_many :round_participants, N1gp.Rounds.RoundParticipant
+    has_many :matches, N1gp.Rounds.Match
 
     timestamps()
   end

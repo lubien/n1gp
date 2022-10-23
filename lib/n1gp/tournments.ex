@@ -247,7 +247,64 @@ defmodule N1gp.Tournments do
       ** (Ecto.NoResultsError)
 
   """
-  def get_tournment!(id), do: Repo.get!(Tournment, id)
+  def get_tournment!(id) do
+    Tournment
+    # |> preload([:participants])
+    |> preload([:participants, :matches, rounds: [:round_participants]])
+    |> Repo.get!(id)
+    # |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+  end
+
+  def calculate_matches_breakdown(matches) do
+
+    matches
+    |> Enum.reduce(%{}, fn %{participant1_id: participant1_id, participant2_id: participant2_id} = match, acc ->
+      # if match.winner_id == 989 do
+      #   match |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+      # end
+      bucket_1 = Map.get(acc, participant1_id, match_breakdown_bucket())
+      bucket_2 = Map.get(acc, participant2_id, match_breakdown_bucket())
+
+      # {participant1_id, participant2_id, match.winner_id} |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+      {bucket_1, bucket_2} =
+        case match.winner_id do
+          ^participant1_id ->
+            {
+              Map.update(bucket_1, :won, 1, & &1 + 1),
+              add_loss_to_match_breakdown(match, bucket_2)
+            }
+          ^participant2_id ->
+            {
+              add_loss_to_match_breakdown(match, bucket_1),
+              Map.update(bucket_2, :won, 1, & &1 + 1)
+            }
+
+          _ ->
+            {bucket_1, bucket_2}
+        end
+
+      acc
+      |> Map.put(participant1_id, bucket_1)
+      |> Map.put(participant2_id, bucket_2)
+      # |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+    end)
+  end
+
+  defp match_breakdown_bucket do
+    %{ won: 0, lost: 0, forfeited: 0}
+  end
+
+  defp add_loss_to_match_breakdown(match, bucket) do
+    bucket
+    |> Map.update(:forfeited, 1, fn val ->
+      if match.forfeited do
+        val + 1
+      else
+        val
+      end
+    end)
+    |> Map.update(:lost, 1, & &1 + 1)
+  end
 
   @doc """
   Creates a tournment.

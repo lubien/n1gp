@@ -98,6 +98,7 @@ defmodule N1gpWeb do
 
       import N1gpWeb.ErrorHelpers
       import N1gpWeb.Gettext
+      import N1gpWeb.Components
       alias N1gpWeb.Router.Helpers, as: Routes
     end
   end

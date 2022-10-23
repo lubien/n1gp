@@ -30,6 +30,8 @@ defmodule N1gpWeb.Router do
     live "/tournments/:id/edit", TournmentLive.Index, :edit
 
     live "/tournments/:id", TournmentLive.Show, :show
+    live "/tournments/:id/stats", TournmentLive.Show, :stats
+    live "/tournments/:id/rounds/:round_id", TournmentLive.Show, :show
     live "/tournments/:id/show/edit", TournmentLive.Show, :edit
 
     live "/participants", ParticipantLive.Index, :index

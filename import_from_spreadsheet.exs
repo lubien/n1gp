@@ -25,4 +25,4 @@ N1gp.Tournments.import_tournment(key: "nv2022c12bm3",name: "Blood Moon 2022 #3",
 
 # N1gp.Importer.import_chips()
 # # |> Enum.filter(& &1.code == nil)
-|> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+# |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
