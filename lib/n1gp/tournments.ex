@@ -171,6 +171,8 @@ defmodule N1gp.Tournments do
         :participant1_id,
         :participant2_id,
         :winner_id,
+        :forfeited,
+        :challonge_round,
       ]
 
       matches =
@@ -191,6 +193,8 @@ defmodule N1gp.Tournments do
               started_at: match.started_at,
               completed_at: match.completed_at,
               scores_csv: match.scores_csv,
+              challonge_round: match.challonge_round,
+              forfeited: match.forfeited,
 
               participant1_id: Map.get(participant1_on_db || %{}, :id),
               participant2_id: Map.get(participant2_on_db || %{}, :id),

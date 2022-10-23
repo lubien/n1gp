@@ -12,6 +12,8 @@ defmodule N1gp.Rounds.Match do
     field :participant1_id, :id
     field :participant2_id, :id
     field :winner_id, :id
+    field :challonge_round, :integer
+    field :forfeited, :boolean, default: false
 
     timestamps()
   end
