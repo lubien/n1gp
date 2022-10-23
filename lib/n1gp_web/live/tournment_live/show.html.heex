@@ -318,7 +318,7 @@
   <ul role="list" class="divide-y divide-gray-200 max-w-2xl mx-auto">
     <%= for {count, chip} <- @chip_usage_breakdown do %>
       <li class="flex py-4">
-        <img class="h-10 w-10 rounded-full" src={chip.image} alt="">
+        <img class="h-10 w-10" src={chip.image} alt="">
         <div class="ml-3">
           <p class="text-sm font-medium text-gray-900"><%= chip.name %></p>
           <p class="text-sm text-gray-500">Used by <%= count %></p>

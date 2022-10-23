@@ -74,19 +74,26 @@ defmodule N1gp.Importer do
     }
   end
 
-  def get_round({_round, position}, participants) do
+  def get_round({round, position}, participants) do
+    response =
+      "https://api.challonge.com/v1/tournaments/#{round[:challonge_id]}.json?include_participants=1&include_matches=1"
+      |> challonge_get()
+
     challonge_tournment =
-      File.read!("priv/tournments/nv2022c12bm3/round-robin/tournment.json")
-      |> Jason.decode!()
+      # File.read!("priv/tournments/#{round[:challonge_id]}/round-robin/tournment.json")
+      # |> Jason.decode!()
+      response
       |> Map.get("tournament")
 
     challonge_participants =
-      File.read!("priv/tournments/nv2022c12bm3/round-robin/participants.json")
-      |> Jason.decode!()
+      response["tournament"]["participants"]
+      # File.read!("priv/tournments/nv2022c12bm3/round-robin/participants.json")
+      # |> Jason.decode!()
 
     challonge_matches =
-      File.read!("priv/tournments/nv2022c12bm3/round-robin/matches.json")
-      |> Jason.decode!()
+      # File.read!("priv/tournments/nv2022c12bm3/round-robin/matches.json")
+      # |> Jason.decode!()
+      response["tournament"]["matches"]
 
     round_participants = map_participants_to_challonge_participants(participants, challonge_participants)
 
@@ -111,11 +118,15 @@ defmodule N1gp.Importer do
     }
   end
 
+  def challonge_get(url) do
+    opts = [hackney: [basic_auth: {System.get_env("CHALLONGE_USERNAME"), System.get_env("CHALLONGE_API_KEY")}]]
+    HTTPoison.get!(url, [], opts)
+    |> Map.get(:body)
+    |> Jason.decode!()
+  end
+
   def map_participants_to_challonge_participants(participants, challonge_participants) do
-    %{
-      exact: exact_matches,
-      unknown: unknowns
-    } =
+    res =
       challonge_participants
       |> Enum.group_by(fn remote ->
         if Enum.any?(participants, &same_name_on_challonge?(&1, remote)) do
@@ -124,6 +135,9 @@ defmodule N1gp.Importer do
           :unknown
         end
       end)
+
+    exact_matches = Map.get(res, :exact, [])
+    unknowns = Map.get(res, :unknown, [])
 
     exact_matches =
       exact_matches

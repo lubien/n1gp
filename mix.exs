@@ -48,6 +48,7 @@ defmodule N1gp.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
+      {:httpoison, "~> 1.8"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:plug_cowboy, "~> 2.5"}
     ]
