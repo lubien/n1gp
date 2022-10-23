@@ -27,6 +27,19 @@ defmodule N1gpWeb.TournmentLive.Show do
      }
   end
 
+  def handle_params(_params, _, %{assigns: %{live_action: :most_used_chips}} = socket) do
+    participant_chips = Tournments.load_participant_chips(socket.assigns.tournment.id)
+    chip_usage_breakdown = Tournments.calculate_participant_chips_breakdown(participant_chips)
+
+    {:noreply,
+     socket
+     |> assign(:current_tab, :most_used_chips)
+     |> assign(:participant_chips, participant_chips)
+     |> assign(:chip_usage_breakdown, chip_usage_breakdown)
+     |> assign(:page_title, page_title(socket.assigns.live_action))
+    }
+  end
+
   def handle_params(%{"id" => id}, _, socket) do
     {:noreply,
      socket
@@ -82,5 +95,6 @@ defmodule N1gpWeb.TournmentLive.Show do
 
   defp page_title(:show), do: "Show Tournment"
   defp page_title(:stats), do: "Show Tournment"
+  defp page_title(:most_used_chips), do: "Show Tournment"
   defp page_title(:edit), do: "Edit Tournment"
 end

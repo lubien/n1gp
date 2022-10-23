@@ -10,6 +10,8 @@ defmodule N1gp.Tournments.Participant do
     field :navicust_image, :string
     field :version, :string
     field :tournment_id, :id
+    has_many :participant_chips, N1gp.Tournments.ParticipantChip
+    many_to_many :chips, N1gp.Chips.Chip, join_through: "participants_chips"
 
     timestamps()
   end

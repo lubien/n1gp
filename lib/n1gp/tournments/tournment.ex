@@ -8,6 +8,8 @@ defmodule N1gp.Tournments.Tournment do
     field :type, :string
     has_many :rounds, N1gp.Rounds.Round
     has_many :participants, N1gp.Tournments.Participant
+    # has_many :participant_chips, through: [:participants, :participant_chips]
+    has_many :chips, through: [:participants, :chips]
     has_many :matches, through: [:rounds, :matches]
 
     timestamps()

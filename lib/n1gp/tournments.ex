@@ -306,6 +306,37 @@ defmodule N1gp.Tournments do
     |> Map.update(:lost, 1, & &1 + 1)
   end
 
+  def load_participant_chips(tournament_id) do
+    pids_query =
+      from p in Participant,
+      where: p.tournment_id == ^tournament_id,
+      select: p.id
+
+    pcs_query =
+      from pc in ParticipantChip,
+      where: pc.participant_id in subquery(pids_query),
+      preload: [:chip]
+
+    Repo.all(pcs_query)
+  end
+
+  def calculate_participant_chips_breakdown(participant_chips) do
+    {counts, chips} =
+      participant_chips
+      |> Enum.reduce({%{}, %{}}, fn pc, {counts, chips} ->
+        counts = Map.update(counts, pc.chip_id, 1, & &1 + 1)
+        chips = Map.put_new(chips, pc.chip_id, pc.chip)
+        {counts, chips}
+      end)
+
+    chips |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+
+    chips
+    |> Map.to_list()
+    |> Enum.map(fn {id, chip} -> {counts[id], chip} end)
+    |> Enum.sort_by(fn {count, _chip} -> count end, :desc)
+  end
+
   @doc """
   Creates a tournment.
 

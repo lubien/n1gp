@@ -36,10 +36,18 @@ defmodule N1gpWeb.Components do
   end
 
   def tournment_layout(assigns) do
-    assigns = assign_new(assigns, :filtered_tabs, fn ->
-      assigns.tab
-      |> Enum.filter(& &1.id == assigns.active_tab)
-    end)
+    assigns =
+      assigns
+      |> assign_new(:filtered_tabs, fn ->
+        assigns.tab
+        |> Enum.filter(& &1.id == assigns.active_tab)
+      end)
+      |> assign_new(:progress_pct, fn ->
+        completed = Enum.count(assigns.tournment.matches, & &1.state == "complete")
+        count = Enum.count(assigns.tournment.matches)
+
+        Float.ceil(100 * completed / count)
+      end)
 
     ~H"""
     <div class="min-h-full">
@@ -190,9 +198,27 @@ defmodule N1gpWeb.Components do
                 </svg>
                 Stats
               <% end %>
+              <%= live_patch to: Routes.tournment_show_path(N1gpWeb.Endpoint, :most_used_chips, @tournment), class: "bg-gray-200 text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" do %>
+              <!-- Current: "bg-gray-200 text-gray-900", Default: "text-gray-700 hover:text-gray-900 hover:bg-gray-50" -->
+                <!--
+                  Heroicon name: outline/home
+
+                  Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
+                -->
+                <svg class="text-gray-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                Most used chips
+              <% end %>
             </div>
             <div class="mt-8">
-              <!-- Secondary navigation -->
+              <h3 class="px-3 text-sm font-medium text-gray-500" id="desktop-teams-headline">Progress</h3>
+              <div class="mt-1 space-y-1 mb-4" role="group" aria-labelledby="desktop-teams-headline">
+                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                  <div class="bg-blue-600 h-2.5 rounded-full" style={"width: #{@progress_pct}%"}></div>
+                </div>
+              </div>
+
               <h3 class="px-3 text-sm font-medium text-gray-500" id="desktop-teams-headline">Tags</h3>
               <div class="mt-1 space-y-1" role="group" aria-labelledby="desktop-teams-headline">
                 <a href="#" class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
