@@ -9,13 +9,29 @@ defmodule N1gpWeb.TournmentLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id, "round_id" => round_id}, _, socket) do
+  def handle_params(%{"id" => _id, "round_id" => round_id}, _, socket) do
     {:noreply,
      socket
      |> assign(:current_tab, :round)
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:round, Enum.find(socket.assigns.tournment.rounds, & &1.id == round_id))
      }
+  end
+
+  def handle_params(%{"id" => _id, "participant_id" => participant_id}, _, socket) do
+    participant = Enum.find(socket.assigns.tournment.participants, & Integer.to_string(&1.id) == participant_id)
+    participant_chips =
+      participant.participant_chips
+      |> Enum.map(fn pc -> {Enum.find(participant.chips, & &1.id == pc.chip_id), pc} end)
+      |> Enum.sort_by(fn {_c, pc} -> pc.inserted_at end, :asc)
+
+    {:noreply,
+     socket
+     |> assign(:current_tab, :participant)
+     |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:participant, participant)
+     |> assign(:participant_chips, participant_chips)
+    }
   end
 
   def handle_params(_params, _, %{assigns: %{live_action: :stats}} = socket) do
@@ -95,6 +111,7 @@ defmodule N1gpWeb.TournmentLive.Show do
 
   defp page_title(:show), do: "Show Tournment"
   defp page_title(:stats), do: "Show Tournment"
+  defp page_title(:participant), do: "Show Tournment"
   defp page_title(:most_used_chips), do: "Show Tournment"
   defp page_title(:edit), do: "Edit Tournment"
 end

@@ -35,6 +35,20 @@ defmodule N1gpWeb.Components do
     """
   end
 
+  def navicust_description(%{description: "https://" <> rest} = assigns) do
+    ~H"""
+    <div class="text-center">
+      <img src={"https://#{rest}"} class="w-full max-w-[200px] mx-auto h-auto" />
+    </div>
+    """
+  end
+
+  def navicust_description(assigns) do
+    ~H"""
+    <span><%= @description %></span>
+    """
+  end
+
   def tournment_layout(assigns) do
     assigns =
       assigns

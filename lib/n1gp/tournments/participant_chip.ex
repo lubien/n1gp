@@ -7,7 +7,6 @@ defmodule N1gp.Tournments.ParticipantChip do
     field :code, :string
     field :quantity, :integer
     field :reg_or_tag, :string
-    # field :participant_id, :id
     belongs_to :participant, N1gp.Tournments.Participant
     belongs_to :chip, N1gp.Chips.Chip
 

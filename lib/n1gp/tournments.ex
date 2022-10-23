@@ -250,7 +250,7 @@ defmodule N1gp.Tournments do
   def get_tournment!(id) do
     Tournment
     # |> preload([:participants])
-    |> preload([:participants, :matches, rounds: [:round_participants]])
+    |> preload([:matches, participants: [:chips, :participant_chips], rounds: [:round_participants]])
     |> Repo.get!(id)
     # |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
   end
@@ -321,20 +321,19 @@ defmodule N1gp.Tournments do
   end
 
   def calculate_participant_chips_breakdown(participant_chips) do
-    {counts, chips} =
+    {used_by, counts, chips} =
       participant_chips
-      |> Enum.reduce({%{}, %{}}, fn pc, {counts, chips} ->
-        counts = Map.update(counts, pc.chip_id, 1, & &1 + 1)
+      |> Enum.reduce({%{}, %{}, %{}}, fn pc, {used_by, counts, chips} ->
+        used_by = Map.update(used_by, pc.chip_id, 1, & &1 + 1)
+        counts = Map.update(counts, pc.chip_id, pc.quantity, & &1 + pc.quantity)
         chips = Map.put_new(chips, pc.chip_id, pc.chip)
-        {counts, chips}
+        {used_by, counts, chips}
       end)
-
-    chips |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
 
     chips
     |> Map.to_list()
-    |> Enum.map(fn {id, chip} -> {counts[id], chip} end)
-    |> Enum.sort_by(fn {count, _chip} -> count end, :desc)
+    |> Enum.map(fn {id, chip} -> {used_by[id], counts[id], chip} end)
+    |> Enum.sort_by(fn {_used_by, count, _chip} -> count end, :desc)
   end
 
   @doc """
